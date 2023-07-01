@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ninja Gold Game</title>
+    <!--CSS for styling all of my elements -->
+    <style>
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .container h3 {
+            font-size: x-large;
+        }
+
+        #gold {
+            background-color: goldenrod;
+            margin-top: 60px;
+            width: 90px;
+            height: 40px;
+            box-shadow: 3px 2px black;
+            font-weight: 700;
+        }
+
+        .activity h3 {
+            color: black;
+            font-size: larger;
+            border-bottom: 1px solid black;
+        }
+
+        .activity {
+            width: 400px;
+            height: 200px;
+            overflow-y: scroll;
+            background-color: azure;
+            border: 2px solid black;
+            margin: 20px auto;
+            padding: 10px;
+            line-height: 2;
+        }
+
+        .activity ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .activity li {
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .activity li:before {
+            content: "\2022";
+            position: absolute;
+            left: 0;
+            color: black;
+            text-indent: 10px;
+        }
+
+        .building {
+            display: inline-block;
+            width: 200px;
+            height: 250px;
+            font-weight: 400;
+            text-align: center;
+            border: 2px solid black;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        #farm {
+            background-color:coral;
+        }
+
+        #cave {
+            background-color: gainsboro;
+        }
+
+        #house {
+            background-color: mistyrose;
+        }
+
+        #casino {
+            background-color: cornflowerblue;
+        }
+
+        .building h4 {
+            font-size: x-large;
+            font-weight: 700;
+        }
+
+        #reset {
+            margin-top: 40px;
+            margin-bottom: 40px;
+            width: 100px;
+            height: 45px;
+            background-color: honeydew;
+            color:black;
+            box-shadow: 3px 2px black;
+            font-weight: 700;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <h3>Your Gold: {{ gold }}</h3>
+        </div>
+        <div class="building" id = "farm">
+            <h4><strong>Farm</strong></h4>
+            <p>(Earns 10 - 20 golds)</p>
+            <form action="/process_money" method="post">
+                <input type="hidden" name="building" value="farm" />
+                <input id = "gold" type="submit" value="Find Gold!" />
+            </form>
+        </div>
+        <div class="building" id = "cave">
+            <h4><strong>Cave</strong></h4>
+            <p>(Earns 5 - 10 golds)</p>
+            <form action="/process_money" method="post">
+                <input type="hidden" name="building" value="cave" />
+                <input id = "gold" type="submit" value="Find Gold!" />
+            </form>
+        </div>
+        <div class="building" id = "house">
+            <h4><strong>House</strong></h4>
+            <p>(Earns 2 - 5 golds)</p>
+            <form action="/process_money" method="post">
+                <input type="hidden" name="building" value="house" />
+                <input id= "gold" type="submit" value="Find Gold!" />
+            </form>
+        </div>
+        <div class="building" id = "casino">
+            <h4><strong>Casino</strong></h4>
+            <p>(Earns/Takes 0 - 50 golds)</p>
+            <form action="/process_money" method="post">
+                <input type="hidden" name="building" value="casino" />
+                <input id = "gold" type="submit" value="Find Gold!" />
+            </form>
+        </div>
+
+        <!--NINJA BONUS: Add a reset button to restart the game-->
+        <form action="/process_money" method="post">
+            <input type="hidden" name="reset_game" value="true" />
+            <input id = "reset" type="submit" value="Reset Game" />
+        </form>
+
+        <!--NINJA BONUS: Display all the activities performed by the user in a log on the HTML, as shown in the wireframe-->
+        <div class="activity">
+            <h3>Activities: </h3>
+            <!--NINJA BONUS: Have the activities be color-coded as shown above (+ money is green, - money is red)-->
+            <ul>
+                {% for activity in activities %}
+                    {% if 'Lost' in activity or 'lost' in activity %}
+                    <!--used inline css to make the 'loss' text red and 'earn' text green-->
+                        <li style="color: red;">{{ activity }}</li>
+                    {% else %}
+                        <li style="color: green;">{{ activity }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+</body>
+</html>
+
+<!-- Will update at a later date to add SENSEI BONUSES!-->
